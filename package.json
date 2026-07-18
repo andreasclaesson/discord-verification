@@ -1,0 +1,20 @@
+{
+  "name": "discord-verification",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/shared",
+    "packages/bot",
+    "packages/web"
+  ],
+  "scripts": {
+    "build": "npm run build -w packages/shared && npm run build -w packages/bot && npm run build -w packages/web",
+    "clean": "node -e \"const fs=require('fs'); for (const p of ['packages/shared/dist','packages/bot/dist','packages/web/dist','packages/shared/tsconfig.tsbuildinfo','packages/bot/tsconfig.tsbuildinfo','packages/web/tsconfig.tsbuildinfo']) fs.rmSync(p, {recursive:true, force:true});\"",
+    "dev:bot": "npm run dev -w packages/bot",
+    "dev:web": "npm run dev -w packages/web",
+    "db:init": "node -e \"require('./packages/shared/dist/db.js').initDb()\""
+  },
+  "engines": {
+    "node": ">=20 <23"
+  }
+}

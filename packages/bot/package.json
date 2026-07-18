@@ -1,0 +1,23 @@
+{
+  "name": "@discord-verification/bot",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "register-commands": "node dist/registerCommands.js",
+    "register-commands:dev": "tsx src/registerCommands.ts"
+  },
+  "dependencies": {
+    "@discord-verification/shared": "*",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/ws": "^8.5.12",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.4"
+  }
+}
