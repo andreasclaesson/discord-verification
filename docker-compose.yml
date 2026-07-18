@@ -1,0 +1,41 @@
+services:
+  bot:
+    build: .
+    command: ["node", "packages/bot/dist/index.js"]
+    env_file:
+      - .env
+    environment:
+      # force the path regardless of what a host-side .env might set for
+      # local (non-Docker) dev -- inside the container it must be under /app.
+      DATABASE_PATH: /app/data/verification.sqlite
+    volumes:
+      - verification-data:/app/data
+    restart: unless-stopped
+
+  web:
+    build: .
+    command: ["node", "packages/web/dist/index.js"]
+    env_file:
+      - .env
+    environment:
+      DATABASE_PATH: /app/data/verification.sqlite
+    ports:
+      - "${WEB_PORT:-3000}:${WEB_PORT:-3000}"
+    volumes:
+      - verification-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://localhost:' + (process.env.WEB_PORT || 3000) + '/healthz').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  verification-data:
