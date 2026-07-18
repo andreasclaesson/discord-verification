@@ -44,3 +44,8 @@ server-side. No codes to copy, no slash commands.
 - `PUBLIC_BASE_URL` must be reachable from a user's browser (not
   `localhost`) once you're not testing locally, put the web package behind
   a reverse proxy with TLS.
+
+## TODO
+
+- Add multi-guild support so the bot can handle verification flows for more
+  than one Discord server at a time.
